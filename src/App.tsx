@@ -7,11 +7,22 @@ function App() {
   const [passwordLog, setPasswordLog] = useState("");
 
   const login = () => {
+    console.log("Attempting to log in with:", emailLog, passwordLog);
+
     axios
-      .post("https://395e-87-205-130-245.ngrok-free.app/login", {
-        email: emailLog,
-        password: passwordLog,
-      })
+      .post(
+        "https://5789-87-205-130-245.ngrok-free.app/login",
+        {
+          username: emailLog,
+          password: passwordLog,
+        },
+        {
+          headers: {
+            "ngrok-skip-browser-warning": "true",
+            "Content-Type": "application/json",
+          },
+        }
+      )
       .then((response) => {
         if (response.data.message) {
           alert("Wrong Email/password");
@@ -20,15 +31,17 @@ function App() {
           localStorage.setItem("email", savedEmail);
           setEmailLog("");
           setPasswordLog("");
-          console.log(emailLog);
-          console.log(passwordLog);
+          console.log("Logged in successfully:", emailLog, passwordLog);
         }
+      })
+      .catch((error) => {
+        console.error("There was an error with the login request:", error);
       });
   };
 
   useEffect(() => {
     axios
-      .get("https://395e-87-205-130-245.ngrok-free.app/users", {
+      .get("https://5789-87-205-130-245.ngrok-free.app/users", {
         headers: {
           "ngrok-skip-browser-warning": "true",
         },
@@ -48,7 +61,7 @@ function App() {
       <div className="flex justify-center flex-col mt-4">
         <label className="mt-2 text-center">Email</label>
         <input
-          type="email"
+          type="text"
           onChange={(e) => {
             setEmailLog(e.target.value);
           }}
