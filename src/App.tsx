@@ -6,7 +6,7 @@ function App() {
 
   useEffect(() => {
     axios
-      .get("https://6699-77-253-29-247.ngrok-free.app/users", {
+      .get("https://395e-87-205-130-245.ngrok-free.app/users", {
         headers: {
           "ngrok-skip-browser-warning": "true",
         },
