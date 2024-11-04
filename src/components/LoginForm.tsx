@@ -1,14 +1,18 @@
 import axios from "axios";
 import { FormEvent, useState } from "react";
 import { toast } from "sonner";
+import { Link } from "react-router-dom";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
   const handleGetDoneDates = () => {
-    axios.get("http://192.168.100.8:3000/api/getDoneDates").then((res) => {
-      localStorage.setItem("doneDates", JSON.stringify(res.data));
-    });
+    axios
+      .get("https://2837-78-131-164-71.ngrok-free.app/getDoneDates")
+      .then((res) => {
+        localStorage.setItem("doneDates", JSON.stringify(res.data));
+      });
   };
 
   const currentUser = localStorage.getItem("user");
@@ -21,7 +25,7 @@ const LoginForm = () => {
 
     try {
       const response = await axios.post(
-        "https://5789-87-205-130-245.ngrok-free.app/login",
+        "https://2837-78-131-164-71.ngrok-free.app/login",
         {
           username: username,
           password: password,
@@ -35,22 +39,29 @@ const LoginForm = () => {
       );
 
       if (response.data.message) {
-        alert("Wrong Email/password");
+        toast.error("Wrong Username/password");
       } else {
-        const savedUsername = JSON.stringify(username);
-        localStorage.setItem("username", username);
-        console.log("Logged in successfully:", username, password);
-        setUsername("");
-        setPassword("");
+        localStorage.setItem(
+          "user",
+          JSON.stringify({
+            id: response.data[0].User_id,
+            Username: username,
+          })
+        );
+        localStorage.setItem("Loading", "true");
+        handleGetDoneDates();
+        window.location.href = "/dashboard";
       }
     } catch (error) {
       console.error("There was an error with the login request:", error);
     }
+    setUsername("");
+    setPassword("");
   };
 
   return (
     <form
-      className="flex flex-col gap-2 w-[450px] pt-2 rounded-xl"
+      className="flex flex-col gap-2 w-[450px] pt-2 rounded-xl "
       method="post"
     >
       <label

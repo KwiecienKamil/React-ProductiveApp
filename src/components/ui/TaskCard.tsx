@@ -1,12 +1,4 @@
-"use client";
-import { getMonth } from "@/app/utils/Helpers";
 import React, { FC, useState } from "react";
-import Day from "./Day";
-import { useAppDispatch, useAppSelector } from "@/app/services/state/store";
-import {
-  removeTask,
-  updateTaskTitle,
-} from "@/app/services/state/features/taskSlice";
 
 import { CiEdit } from "react-icons/ci";
 import { FaCheckSquare } from "react-icons/fa";
@@ -14,10 +6,17 @@ import { SlOptionsVertical } from "react-icons/sl";
 import axios from "axios";
 import dayjs from "dayjs";
 import { toast } from "sonner";
+import { getMonth } from "../../utils/Helpers";
+import { useAppDispatch, useAppSelector } from "../../services/state/store";
 import {
   addDoneDate,
   removeDoneDate,
-} from "@/app/services/state/features/doneDateSlice";
+} from "../../services/state/features/doneDateSlice";
+import {
+  removeTask,
+  updateTaskTitle,
+} from "../../services/state/features/taskSlice";
+import Day from "./Day";
 
 type TaskCardProps = {
   Task_id: number | undefined;

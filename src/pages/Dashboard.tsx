@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import axios from "axios";
+import Tasks from "../components/Tasks";
+import Rewards from "../components/Rewards";
 
 const Dashboard = () => {
   const [streak, setStreak] = useState(0);
@@ -23,7 +25,7 @@ const Dashboard = () => {
   useEffect(() => {
     const isDataLoading = localStorage.getItem("Loading");
     axios
-      .post("http://192.168.100.8:3000/api/getUsersTasks", {
+      .post("https://2837-78-131-164-71.ngrok-free.app/getUsersTasks", {
         User_id: currentUserId,
       })
       .then((res) => {
@@ -94,17 +96,13 @@ const Dashboard = () => {
 
   return (
     <div className="flex justify-between w-full">
-      <Navbar />
+      <div className="flex">
+        <Navbar />
+        <Tasks />
+      </div>
+      <Rewards />
     </div>
   );
 };
 
 export default Dashboard;
-
-// <div className="flex justify-between w-full">
-//   <div className="flex">
-//     <Navbar />
-//     <Tasks />
-//   </div>
-//   <Rewards />
-// </div>

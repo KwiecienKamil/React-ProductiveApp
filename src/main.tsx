@@ -6,7 +6,6 @@ import Dashboard from "./pages/Dashboard.tsx";
 import Login from "./pages/Login.tsx";
 import { Toaster } from "sonner";
 import { Providers } from "./services/state/provider.tsx";
-import App from "./App.tsx";
 
 const router = createBrowserRouter([
   {
@@ -14,8 +13,8 @@ const router = createBrowserRouter([
     element: <Login />,
   },
   {
-    path: "/login",
-    element: <App />,
+    path: "/dashboard",
+    element: <Dashboard />,
   },
 ]);
 
