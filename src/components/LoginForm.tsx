@@ -9,7 +9,7 @@ const LoginForm = () => {
 
   const handleGetDoneDates = () => {
     axios
-      .get("https://2837-78-131-164-71.ngrok-free.app/getDoneDates")
+      .get("https://2b77-77-255-59-240.ngrok-free.app/getDoneDates")
       .then((res) => {
         localStorage.setItem("doneDates", JSON.stringify(res.data));
       });
@@ -25,7 +25,7 @@ const LoginForm = () => {
 
     try {
       const response = await axios.post(
-        "https://2837-78-131-164-71.ngrok-free.app/login",
+        "https://2b77-77-255-59-240.ngrok-free.app/login",
         {
           username: username,
           password: password,
@@ -48,6 +48,7 @@ const LoginForm = () => {
             Username: username,
           })
         );
+
         localStorage.setItem("Loading", "true");
         handleGetDoneDates();
         window.location.href = "/dashboard";

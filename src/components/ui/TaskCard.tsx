@@ -45,7 +45,7 @@ const TaskCard: FC<TaskCardProps> = ({ Task_id, title, task }) => {
   const handleTaskDone = () => {
     if (taskDone === true) {
       axios
-        .post("http://localhost:3000/api/deleteDoneDate", {
+        .post("https://2b77-77-255-59-240.ngrok-free.app/deleteDoneDate", {
           Task_id,
           TodaysDate,
         })
@@ -65,15 +65,17 @@ const TaskCard: FC<TaskCardProps> = ({ Task_id, title, task }) => {
         });
     } else {
       axios
-        .post("http://localhost:3000/api/addDoneDate", {
+        .post("https://2b77-77-255-59-240.ngrok-free.app/addDoneDate", {
           Task_id,
           TodaysDate,
         })
         .then((res) => {
           if (res.status === 200) {
-            axios.get("http://localhost:3000/api/getDoneDates").then((res) => {
-              localStorage.setItem("doneDates", JSON.stringify(res.data));
-            });
+            axios
+              .get("https://2b77-77-255-59-240.ngrok-free.app/getDoneDates")
+              .then((res) => {
+                localStorage.setItem("doneDates", JSON.stringify(res.data));
+              });
             setTaskDone(!taskDone);
             dispatch(
               addDoneDate({
@@ -84,7 +86,7 @@ const TaskCard: FC<TaskCardProps> = ({ Task_id, title, task }) => {
           }
         })
         .catch((err) => {
-          toast.success("Something went wrong");
+          toast.error("Something went wrong");
         });
     }
   };
@@ -92,7 +94,7 @@ const TaskCard: FC<TaskCardProps> = ({ Task_id, title, task }) => {
   const handleNewTaskTitle = () => {
     dispatch(updateTaskTitle({ ...task, Task_title: newTaskTitle }));
     setEditingTaskTitle(!editingTaskTitle);
-    axios.post("http://localhost:3000/api/updateTask", {
+    axios.post("https://2b77-77-255-59-240.ngrok-free.app/updateTask", {
       newTaskTitle,
       Task_id,
     });
@@ -100,11 +102,15 @@ const TaskCard: FC<TaskCardProps> = ({ Task_id, title, task }) => {
 
   const handleRemoveTask = () => {
     axios
-      .post("http://localhost:3000/api/removeAllDoneDates", { Task_id })
+      .post("https://2b77-77-255-59-240.ngrok-free.app/removeAllDoneDates", {
+        Task_id,
+      })
       .then((res) => {
         if (res.status === 200) {
           axios
-            .post("http://localhost:3000/api/removeTask", { Task_id })
+            .post("https://2b77-77-255-59-240.ngrok-free.app/removeTask", {
+              Task_id,
+            })
             .then((res) => {
               if (res.status === 200) {
                 dispatch(removeTask(task));
