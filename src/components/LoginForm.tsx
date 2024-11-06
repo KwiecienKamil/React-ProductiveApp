@@ -9,9 +9,20 @@ const LoginForm = () => {
 
   const handleGetDoneDates = () => {
     axios
-      .get("https://2b77-77-255-59-240.ngrok-free.app/getDoneDates")
+      .get("https://516b-78-8-235-49.ngrok-free.app/getDoneDates", {
+        responseType: "json",
+      })
       .then((res) => {
-        localStorage.setItem("doneDates", JSON.stringify(res.data));
+        if (res.headers["content-type"].includes("application/json")) {
+          localStorage.setItem("doneDates", JSON.stringify(res.data));
+        } else {
+          console.error(
+            "Expected JSON response, but got HTML or another format."
+          );
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
       });
   };
 
@@ -22,10 +33,9 @@ const LoginForm = () => {
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
     localStorage.clear();
-
     try {
       const response = await axios.post(
-        "https://2b77-77-255-59-240.ngrok-free.app/login",
+        "https://516b-78-8-235-49.ngrok-free.app/login",
         {
           username: username,
           password: password,
@@ -41,6 +51,7 @@ const LoginForm = () => {
       if (response.data.message) {
         toast.error("Wrong Username/password");
       } else {
+        handleGetDoneDates();
         localStorage.setItem(
           "user",
           JSON.stringify({
@@ -48,9 +59,7 @@ const LoginForm = () => {
             Username: username,
           })
         );
-
         localStorage.setItem("Loading", "true");
-        handleGetDoneDates();
         window.location.href = "/dashboard";
       }
     } catch (error) {

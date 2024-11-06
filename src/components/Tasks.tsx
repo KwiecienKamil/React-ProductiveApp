@@ -1,4 +1,3 @@
-
 import { FaPlus } from "react-icons/fa";
 import NavButton from "./ui/NavButton";
 import TaskCard from "./ui/TaskCard";
@@ -21,23 +20,25 @@ const Tasks = () => {
 
   const handleAddTask = () => {
     axios
-      .post("http://localhost:3000/api/tasks", {
+      .post("https://516b-78-8-235-49.ngrok-free.app/tasks", {
         taskName,
         parsedUserId,
       })
       .then((res) => {
         if (res.status === 200) {
-          axios.get("http://localhost:3000/api/tasks").then((res) => {
-            const addedTaskId = res.data[res.data.length - 1].Task_id;
-            dispatch(
-              addTask({
-                Task_id: addedTaskId,
-                Task_title: "Task",
-                Task_isTaskDone: false,
-                User_id: parsedUserId,
-              })
-            );
-          });
+          axios
+            .get("https://516b-78-8-235-49.ngrok-free.app/tasks")
+            .then((res) => {
+              const addedTaskId = res.data[res.data.length - 1].Task_id;
+              dispatch(
+                addTask({
+                  Task_id: addedTaskId,
+                  Task_title: "Task",
+                  Task_isTaskDone: false,
+                  User_id: parsedUserId,
+                })
+              );
+            });
         }
       });
   };

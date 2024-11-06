@@ -25,7 +25,7 @@ const Dashboard = () => {
   useEffect(() => {
     const isDataLoading = localStorage.getItem("Loading");
     axios
-      .post("https://2b77-77-255-59-240.ngrok-free.app/getUsersTasks", {
+      .post("https://516b-78-8-235-49.ngrok-free.app/getUsersTasks", {
         User_id: currentUserId,
       })
       .then((res) => {
