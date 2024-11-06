@@ -1,72 +1,61 @@
 import axios from "axios";
 import { FormEvent, useState } from "react";
 import { toast } from "sonner";
-import { Link } from "react-router-dom";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleGetDoneDates = () => {
-    axios
-      .get("https://516b-78-8-235-49.ngrok-free.app/getDoneDates", {
-        responseType: "json",
-      })
-      .then((res) => {
-        if (res.headers["content-type"].includes("application/json")) {
-          localStorage.setItem("doneDates", JSON.stringify(res.data));
-        } else {
-          console.error(
-            "Expected JSON response, but got HTML or another format."
-          );
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  };
-
   const currentUser = localStorage.getItem("user");
   const currentUserValue = currentUser ? JSON.parse(currentUser) : [];
   const currentUserId = currentUserValue.id;
 
-  const handleLogin = async (e: FormEvent) => {
-    e.preventDefault();
-    localStorage.clear();
-    try {
-      const response = await axios.post(
-        "https://516b-78-8-235-49.ngrok-free.app/login",
-        {
-          username: username,
-          password: password,
-        },
-        {
-          headers: {
-            "ngrok-skip-browser-warning": "true",
-            "Content-Type": "application/json",
-          },
-        }
-      );
+  const handleGetDoneDates = async () => {
+    axios
+      .get("https://175b-78-8-235-49.ngrok-free.app/getDoneDates")
+      .then((res) => {
+        localStorage.setItem("doneDates", JSON.stringify(res.data));
+        console.log(res.data);
+      });
+  };
 
-      if (response.data.message) {
-        toast.error("Wrong Username/password");
-      } else {
-        handleGetDoneDates();
-        localStorage.setItem(
-          "user",
-          JSON.stringify({
-            id: response.data[0].User_id,
-            Username: username,
-          })
-        );
-        localStorage.setItem("Loading", "true");
-        window.location.href = "/dashboard";
-      }
-    } catch (error) {
-      console.error("There was an error with the login request:", error);
-    }
-    setUsername("");
-    setPassword("");
+  const handleLogin = async (e: FormEvent) => {
+    handleGetDoneDates();
+    // e.preventDefault();
+    // localStorage.clear();
+    // try {
+    //   const response = await axios.post(
+    //     "https://175b-78-8-235-49.ngrok-free.app/login",
+    //     {
+    //       username: username,
+    //       password: password,
+    //     },
+    //     {
+    //       headers: {
+    //         "ngrok-skip-browser-warning": "true",
+    //         "Content-Type": "application/json",
+    //       },
+    //     }
+    //   );
+    //   if (response.data.message) {
+    //     toast.error("Wrong Username/password");
+    //   } else {
+    //     localStorage.setItem(
+    //       "user",
+    //       JSON.stringify({
+    //         id: response.data[0].User_id,
+    //         Username: username,
+    //       })
+    //     );
+    //     localStorage.setItem("Loading", "true");
+    //     handleGetDoneDates();
+    //     window.location.href = "/dashboard";
+    //   }
+    // } catch (error) {
+    //   console.error("There was an error with the login request:", error);
+    // }
+    // setUsername("");
+    // setPassword("");
   };
 
   return (

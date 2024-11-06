@@ -17,15 +17,15 @@ const Dashboard = () => {
     ? JSON.parse(currentDoneDates)
     : [];
 
-  // Filter done dates to include only those with the matching user ID
-  const filteredDoneDates = currentDoneDatesValue.filter(
-    (date: any) => date.User_id === currentUserId
-  );
+  // // Filter done dates to include only those with the matching user ID
+  // const filteredDoneDates = currentDoneDatesValue.filter(
+  //   (date: any) => date.User_id === currentUserId
+  // );
 
   useEffect(() => {
     const isDataLoading = localStorage.getItem("Loading");
     axios
-      .post("https://516b-78-8-235-49.ngrok-free.app/getUsersTasks", {
+      .post("https://175b-78-8-235-49.ngrok-free.app/getUsersTasks", {
         User_id: currentUserId,
       })
       .then((res) => {
@@ -38,7 +38,7 @@ const Dashboard = () => {
   }, [currentUserId]);
 
   useEffect(() => {
-    calculateStreak(filteredDoneDates);
+    calculateStreak(currentDoneDatesValue);
   }, []);
 
   // Helper function to clear the time from a date object

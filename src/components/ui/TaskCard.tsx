@@ -45,7 +45,7 @@ const TaskCard: FC<TaskCardProps> = ({ Task_id, title, task }) => {
   const handleTaskDone = () => {
     if (taskDone === true) {
       axios
-        .post("https://516b-78-8-235-49.ngrok-free.app/deleteDoneDate", {
+        .post("https://175b-78-8-235-49.ngrok-free.app/deleteDoneDate", {
           Task_id,
           TodaysDate,
         })
@@ -65,14 +65,14 @@ const TaskCard: FC<TaskCardProps> = ({ Task_id, title, task }) => {
         });
     } else {
       axios
-        .post("https://516b-78-8-235-49.ngrok-free.app/addDoneDate", {
+        .post("https://175b-78-8-235-49.ngrok-free.app/addDoneDate", {
           Task_id,
           TodaysDate,
         })
         .then((res) => {
           if (res.status === 200) {
             axios
-              .get("https://516b-78-8-235-49.ngrok-free.app/getDoneDates")
+              .get("https://175b-78-8-235-49.ngrok-free.app/getDoneDates")
               .then((res) => {
                 localStorage.setItem("doneDates", JSON.stringify(res.data));
               });
