@@ -17,15 +17,15 @@ const Dashboard = () => {
     ? JSON.parse(currentDoneDates)
     : [];
 
-  // // Filter done dates to include only those with the matching user ID
-  // const filteredDoneDates = currentDoneDatesValue.filter(
-  //   (date: any) => date.User_id === currentUserId
-  // );
+  // Filter done dates to include only those with the matching user ID
+  const filteredDoneDates = currentDoneDatesValue.filter(
+    (date: any) => date.User_id === currentUserId
+  );
 
   useEffect(() => {
     const isDataLoading = localStorage.getItem("Loading");
     axios
-      .post("https://9798-84-40-215-34.ngrok-free.app/getUsersTasks", {
+      .post(`${import.meta.env.VITE_API_URL}/getUsersTasks`, {
         User_id: currentUserId,
       })
       .then((res) => {
@@ -79,11 +79,11 @@ const Dashboard = () => {
       if (currentDay.getTime() === expectedDate.getTime()) {
         currentStreak++; // Continue streak if the date is consecutive
       } else {
-        break; // Stop streak if there is a day break
+        break;
       }
     }
 
-    setStreak(currentStreak); // Set the final streak count in state
+    setStreak(currentStreak);
 
     // Set the first done date (earliest date in uniqueDays)
     if (uniqueDays.length) {
@@ -95,7 +95,7 @@ const Dashboard = () => {
   localStorage.setItem("firstDoneDate", firstDoneDate || "");
 
   return (
-    <div className="flex justify-between w-full">
+    <div className="h-screen px-[2px] vsm:px-[2rem] flex pt-8 font-inter text-black bg-gradient-to-r from-[#FBAB7E] to-[#F7CE68] overflow-hidden">
       <div className="flex">
         <Navbar />
         <Tasks />

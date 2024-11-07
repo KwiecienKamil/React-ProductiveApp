@@ -14,21 +14,20 @@ const LoginForm = () => {
     e.preventDefault();
     localStorage.clear();
     axios
-      .get("https://9798-84-40-215-34.ngrok-free.app/getDoneDates", {
+      .get(`${import.meta.env.VITE_API_URL}/getDoneDates`, {
         headers: {
           "ngrok-skip-browser-warning": "true",
         },
       })
       .then((res) => {
         localStorage.setItem("doneDates", JSON.stringify(res.data));
-        console.log(res.data);
       })
       .catch((error) => {
         console.error(error);
       });
     try {
       const response = await axios.post(
-        "https://9798-84-40-215-34.ngrok-free.app/login",
+        `${import.meta.env.VITE_API_URL}/login`,
         {
           username: username,
           password: password,

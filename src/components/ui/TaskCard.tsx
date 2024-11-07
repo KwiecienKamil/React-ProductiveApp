@@ -45,7 +45,7 @@ const TaskCard: FC<TaskCardProps> = ({ Task_id, title, task }) => {
   const handleTaskDone = () => {
     if (taskDone === true) {
       axios
-        .post("https://9798-84-40-215-34.ngrok-free.app/deleteDoneDate", {
+        .post(`${import.meta.env.VITE_API_URL}/deleteDoneDate`, {
           Task_id,
           TodaysDate,
         })
@@ -65,16 +65,24 @@ const TaskCard: FC<TaskCardProps> = ({ Task_id, title, task }) => {
         });
     } else {
       axios
-        .post("https://9798-84-40-215-34.ngrok-free.app/addDoneDate", {
+        .post(`${import.meta.env.VITE_API_URL}/addDoneDate`, {
           Task_id,
           TodaysDate,
         })
         .then((res) => {
           if (res.status === 200) {
             axios
-              .get("https://9798-84-40-215-34.ngrok-free.app/getDoneDates")
+              .get(`${import.meta.env.VITE_API_URL}/getDoneDates`, {
+                headers: {
+                  "ngrok-skip-browser-warning": "true",
+                },
+              })
               .then((res) => {
                 localStorage.setItem("doneDates", JSON.stringify(res.data));
+                console.log(res.data);
+              })
+              .catch((error) => {
+                console.error(error);
               });
             setTaskDone(!taskDone);
             dispatch(
@@ -94,7 +102,7 @@ const TaskCard: FC<TaskCardProps> = ({ Task_id, title, task }) => {
   const handleNewTaskTitle = () => {
     dispatch(updateTaskTitle({ ...task, Task_title: newTaskTitle }));
     setEditingTaskTitle(!editingTaskTitle);
-    axios.post("https://9798-84-40-215-34.ngrok-free.app/updateTask", {
+    axios.post(`${import.meta.env.VITE_API_URL}/updateTask`, {
       newTaskTitle,
       Task_id,
     });
@@ -102,13 +110,13 @@ const TaskCard: FC<TaskCardProps> = ({ Task_id, title, task }) => {
 
   const handleRemoveTask = () => {
     axios
-      .post("https://9798-84-40-215-34.ngrok-free.app/removeAllDoneDates", {
+      .post(`${import.meta.env.VITE_API_URL}/removeAllDoneDates`, {
         Task_id,
       })
       .then((res) => {
         if (res.status === 200) {
           axios
-            .post("https://9798-84-40-215-34.ngrok-free.app/removeTask", {
+            .post(`${import.meta.env.VITE_API_URL}/removeTask`, {
               Task_id,
             })
             .then((res) => {

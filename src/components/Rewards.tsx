@@ -7,7 +7,7 @@ const Rewards = () => {
   };
   return (
     <div>
-      <div className="hidden sm:flex w-[110px] sm:w-[150px] flex-col sm:items-normal items-center gap-2 pt-2 relative ">
+      <div className="hidden sm:flex w-[110px] sm:w-[150px] flex-col sm:items-normal items-center gap-2 pt-8 relative ">
         <div className="flex justify-end w-full">
           <Link
             to="/"

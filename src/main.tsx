@@ -6,6 +6,8 @@ import Dashboard from "./pages/Dashboard.tsx";
 import Login from "./pages/Login.tsx";
 import { Toaster } from "sonner";
 import { Providers } from "./services/state/provider.tsx";
+import Missions from "./pages/Missions.tsx";
+import Profile from "./pages/Profile.tsx";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +17,14 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <Dashboard />,
+  },
+  {
+    path: "/missions",
+    element: <Missions />,
+  },
+  {
+    path: "/profile",
+    element: <Profile />,
   },
 ]);
 

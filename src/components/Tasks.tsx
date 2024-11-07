@@ -20,25 +20,24 @@ const Tasks = () => {
 
   const handleAddTask = () => {
     axios
-      .post("https://9798-84-40-215-34.ngrok-free.app/tasks", {
+      .post(`${import.meta.env.VITE_API_URL}/tasks`, {
         taskName,
         parsedUserId,
       })
       .then((res) => {
         if (res.status === 200) {
-          axios
-            .get("https://9798-84-40-215-34.ngrok-free.app/tasks")
-            .then((res) => {
-              const addedTaskId = res.data[res.data.length - 1].Task_id;
-              dispatch(
-                addTask({
-                  Task_id: addedTaskId,
-                  Task_title: "Task",
-                  Task_isTaskDone: false,
-                  User_id: parsedUserId,
-                })
-              );
-            });
+          axios.get(`${import.meta.env.VITE_API_URL}/tasks`).then((res) => {
+            console.log(res.data[res.data.length - 1].Task_id);
+            const addedTaskId = res.data[res.data.length - 1].Task_id;
+            dispatch(
+              addTask({
+                Task_id: addedTaskId,
+                Task_title: "Task",
+                Task_isTaskDone: false,
+                User_id: parsedUserId,
+              })
+            );
+          });
         }
       });
   };
