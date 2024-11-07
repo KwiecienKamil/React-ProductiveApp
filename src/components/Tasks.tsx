@@ -20,14 +20,14 @@ const Tasks = () => {
 
   const handleAddTask = () => {
     axios
-      .post("https://175b-78-8-235-49.ngrok-free.app/tasks", {
+      .post("https://9798-84-40-215-34.ngrok-free.app/tasks", {
         taskName,
         parsedUserId,
       })
       .then((res) => {
         if (res.status === 200) {
           axios
-            .get("https://175b-78-8-235-49.ngrok-free.app/tasks")
+            .get("https://9798-84-40-215-34.ngrok-free.app/tasks")
             .then((res) => {
               const addedTaskId = res.data[res.data.length - 1].Task_id;
               dispatch(

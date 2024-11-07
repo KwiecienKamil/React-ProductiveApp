@@ -10,52 +10,54 @@ const LoginForm = () => {
   const currentUserValue = currentUser ? JSON.parse(currentUser) : [];
   const currentUserId = currentUserValue.id;
 
-  const handleGetDoneDates = async () => {
+  const handleLogin = async (e: FormEvent) => {
+    e.preventDefault();
+    localStorage.clear();
     axios
-      .get("https://175b-78-8-235-49.ngrok-free.app/getDoneDates")
+      .get("https://9798-84-40-215-34.ngrok-free.app/getDoneDates", {
+        headers: {
+          "ngrok-skip-browser-warning": "true",
+        },
+      })
       .then((res) => {
         localStorage.setItem("doneDates", JSON.stringify(res.data));
         console.log(res.data);
+      })
+      .catch((error) => {
+        console.error(error);
       });
-  };
-
-  const handleLogin = async (e: FormEvent) => {
-    handleGetDoneDates();
-    // e.preventDefault();
-    // localStorage.clear();
-    // try {
-    //   const response = await axios.post(
-    //     "https://175b-78-8-235-49.ngrok-free.app/login",
-    //     {
-    //       username: username,
-    //       password: password,
-    //     },
-    //     {
-    //       headers: {
-    //         "ngrok-skip-browser-warning": "true",
-    //         "Content-Type": "application/json",
-    //       },
-    //     }
-    //   );
-    //   if (response.data.message) {
-    //     toast.error("Wrong Username/password");
-    //   } else {
-    //     localStorage.setItem(
-    //       "user",
-    //       JSON.stringify({
-    //         id: response.data[0].User_id,
-    //         Username: username,
-    //       })
-    //     );
-    //     localStorage.setItem("Loading", "true");
-    //     handleGetDoneDates();
-    //     window.location.href = "/dashboard";
-    //   }
-    // } catch (error) {
-    //   console.error("There was an error with the login request:", error);
-    // }
-    // setUsername("");
-    // setPassword("");
+    try {
+      const response = await axios.post(
+        "https://9798-84-40-215-34.ngrok-free.app/login",
+        {
+          username: username,
+          password: password,
+        },
+        {
+          headers: {
+            "ngrok-skip-browser-warning": "true",
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.data.message) {
+        toast.error("Wrong Username/password");
+      } else {
+        localStorage.setItem(
+          "user",
+          JSON.stringify({
+            id: response.data[0].User_id,
+            Username: username,
+          })
+        );
+        localStorage.setItem("Loading", "true");
+        window.location.href = "/dashboard";
+      }
+    } catch (error) {
+      console.error("There was an error with the login request:", error);
+    }
+    setUsername("");
+    setPassword("");
   };
 
   return (

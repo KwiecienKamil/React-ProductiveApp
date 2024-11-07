@@ -45,7 +45,7 @@ const TaskCard: FC<TaskCardProps> = ({ Task_id, title, task }) => {
   const handleTaskDone = () => {
     if (taskDone === true) {
       axios
-        .post("https://175b-78-8-235-49.ngrok-free.app/deleteDoneDate", {
+        .post("https://9798-84-40-215-34.ngrok-free.app/deleteDoneDate", {
           Task_id,
           TodaysDate,
         })
@@ -65,14 +65,14 @@ const TaskCard: FC<TaskCardProps> = ({ Task_id, title, task }) => {
         });
     } else {
       axios
-        .post("https://175b-78-8-235-49.ngrok-free.app/addDoneDate", {
+        .post("https://9798-84-40-215-34.ngrok-free.app/addDoneDate", {
           Task_id,
           TodaysDate,
         })
         .then((res) => {
           if (res.status === 200) {
             axios
-              .get("https://175b-78-8-235-49.ngrok-free.app/getDoneDates")
+              .get("https://9798-84-40-215-34.ngrok-free.app/getDoneDates")
               .then((res) => {
                 localStorage.setItem("doneDates", JSON.stringify(res.data));
               });
@@ -94,7 +94,7 @@ const TaskCard: FC<TaskCardProps> = ({ Task_id, title, task }) => {
   const handleNewTaskTitle = () => {
     dispatch(updateTaskTitle({ ...task, Task_title: newTaskTitle }));
     setEditingTaskTitle(!editingTaskTitle);
-    axios.post("https://516b-78-8-235-49.ngrok-free.app/updateTask", {
+    axios.post("https://9798-84-40-215-34.ngrok-free.app/updateTask", {
       newTaskTitle,
       Task_id,
     });
@@ -102,13 +102,13 @@ const TaskCard: FC<TaskCardProps> = ({ Task_id, title, task }) => {
 
   const handleRemoveTask = () => {
     axios
-      .post("https://516b-78-8-235-49.ngrok-free.app/removeAllDoneDates", {
+      .post("https://9798-84-40-215-34.ngrok-free.app/removeAllDoneDates", {
         Task_id,
       })
       .then((res) => {
         if (res.status === 200) {
           axios
-            .post("https://516b-78-8-235-49.ngrok-free.app/removeTask", {
+            .post("https://9798-84-40-215-34.ngrok-free.app/removeTask", {
               Task_id,
             })
             .then((res) => {
