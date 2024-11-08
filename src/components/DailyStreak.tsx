@@ -2,7 +2,6 @@ import StreakPresents from "./StreakPresents";
 import CurrentStreak from "./ui/CurrentStreak";
 
 const DailyStreak = () => {
-  // Getting current streak from local storage
   const currentstreakValue = localStorage.getItem("streak");
   const streak = currentstreakValue ? JSON.parse(currentstreakValue) : [];
 

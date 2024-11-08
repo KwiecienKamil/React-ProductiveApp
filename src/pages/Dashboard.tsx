@@ -38,7 +38,7 @@ const Dashboard = () => {
   }, [currentUserId]);
 
   useEffect(() => {
-    calculateStreak(currentDoneDatesValue);
+    calculateStreak(filteredDoneDates);
   }, []);
 
   // Helper function to clear the time from a date object
@@ -77,7 +77,7 @@ const Dashboard = () => {
 
       // Check if the current day matches the expected date in the streak
       if (currentDay.getTime() === expectedDate.getTime()) {
-        currentStreak++; // Continue streak if the date is consecutive
+        currentStreak++;
       } else {
         break;
       }
